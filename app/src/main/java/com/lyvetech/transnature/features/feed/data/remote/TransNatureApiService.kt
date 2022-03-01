@@ -7,7 +7,7 @@ import retrofit2.http.Path
 interface TransNatureApiService {
 
     @GET("{trail}")
-    suspend fun getSpecificTrail(
+    suspend fun getSearchedTrails(
         @Path("trail") trail: String
     ): List<TrailDto>
 
