@@ -7,7 +7,7 @@ import androidx.room.Query
 import com.lyvetech.transnature.features.feed.data.local.entity.TrailEntity
 
 @Dao
-interface TrailDao {
+interface TransNatureDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrails(trails: List<TrailEntity>)
 

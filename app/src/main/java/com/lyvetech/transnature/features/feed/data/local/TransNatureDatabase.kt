@@ -10,6 +10,6 @@ import com.lyvetech.transnature.features.feed.data.local.entity.TrailEntity
     version = 1
 )
 @TypeConverters(Converters::class)
-abstract class TrailDatabase : RoomDatabase() {
-    abstract val dao: TrailDao
+abstract class TransNatureDatabase : RoomDatabase() {
+    abstract val dao: TransNatureDao
 }
