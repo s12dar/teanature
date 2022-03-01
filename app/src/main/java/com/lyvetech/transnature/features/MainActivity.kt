@@ -1,4 +1,4 @@
-package com.lyvetech.transnature
+package com.lyvetech.transnature.features
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
