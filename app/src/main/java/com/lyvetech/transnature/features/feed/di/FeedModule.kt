@@ -1,10 +1,10 @@
 package com.lyvetech.transnature.features.feed.di
 
-import com.lyvetech.transnature.features.feed.data.local.TransNatureDao
-import com.lyvetech.transnature.features.feed.data.local.TransNatureDatabase
-import com.lyvetech.transnature.features.feed.data.remote.TransNatureApiService
-import com.lyvetech.transnature.features.feed.data.repository.TransNatureRepository
-import com.lyvetech.transnature.features.feed.data.repository.TransNatureRepositoryImpl
+import com.lyvetech.transnature.features.feed.data.local.FeedDao
+import com.lyvetech.transnature.core.data.local.TransNatureDatabase
+import com.lyvetech.transnature.features.feed.data.remote.FeedApiService
+import com.lyvetech.transnature.features.feed.data.repository.FeedRepository
+import com.lyvetech.transnature.features.feed.data.repository.FeedRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,8 +18,8 @@ abstract class FeedModule {
 
     @Binds
     abstract fun provideTransNatureRepository(
-        trailRepositoryImpl: TransNatureRepositoryImpl
-    ): TransNatureRepository
+        trailRepositoryImpl: FeedRepositoryImpl
+    ): FeedRepository
 
     @Binds
     abstract fun provideTransNatureUseCase(
@@ -29,11 +29,11 @@ abstract class FeedModule {
         @Provides
         fun provideTransNatureServiceApi(
             retrofit: Retrofit
-        ): TransNatureApiService = retrofit.create(TransNatureApiService::class.java)
+        ): FeedApiService = retrofit.create(FeedApiService::class.java)
 
         @Provides
         fun provideTransNatureDao(
             transNatureDatabase: TransNatureDatabase
-        ): TransNatureDao = transNatureDatabase.dao
+        ): FeedDao = transNatureDatabase.dao
     }
 }

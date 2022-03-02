@@ -1,10 +1,11 @@
 package com.lyvetech.transnature.features.feed.data.remote
 
 import com.lyvetech.transnature.features.feed.data.remote.dto.TrailDto
+import com.lyvetech.transnature.features.feed.domain.model.Trail
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface TransNatureApiService {
+interface FeedApiService {
 
     @GET("{trail}")
     suspend fun getSearchedTrails(
