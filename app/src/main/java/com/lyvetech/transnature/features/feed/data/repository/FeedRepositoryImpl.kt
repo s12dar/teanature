@@ -13,7 +13,7 @@ class FeedRepositoryImpl(
     private val api: FeedApiService,
     private val dao: FeedDao
 ) : FeedRepository {
-    override fun getSearchedTrails(name: String): Flow<Resource<List<Trail>>> = flow {
+    override suspend fun getSearchedTrails(name: String): Flow<Resource<List<Trail>>> = flow {
         emit(Resource.Loading())
 
         val trails = dao.getSearchedTrails(name).map { it.toTrail() }
@@ -43,7 +43,7 @@ class FeedRepositoryImpl(
         emit(Resource.Success(newTrails))
     }
 
-    override fun getAllTrails(): Flow<Resource<List<Trail>>> = flow {
+    override suspend fun getAllTrails(): Flow<Resource<List<Trail>>> = flow {
         emit(Resource.Loading())
 
         val trails = dao.getAllTrails().map { it.toTrail() }

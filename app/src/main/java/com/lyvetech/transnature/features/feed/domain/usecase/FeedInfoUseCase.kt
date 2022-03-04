@@ -1,10 +1,10 @@
-package com.lyvetech.transnature.features.feed.data.repository
+package com.lyvetech.transnature.features.feed.domain.usecase
 
 import com.lyvetech.transnature.core.util.Resource
 import com.lyvetech.transnature.features.feed.domain.model.Trail
 import kotlinx.coroutines.flow.Flow
 
-interface FeedRepository {
+interface FeedInfoUseCase {
 
     suspend fun getSearchedTrails(name: String): Flow<Resource<List<Trail>>>
 
