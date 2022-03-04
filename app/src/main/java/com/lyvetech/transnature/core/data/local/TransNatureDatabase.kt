@@ -11,7 +11,7 @@ import com.lyvetech.transnature.features.feed.data.local.entity.TrailEntity
     entities = [TrailEntity::class],
     version = 1
 )
-@TypeConverters(Converters::class)
+//@TypeConverters(Converters::class)
 abstract class TransNatureDatabase : RoomDatabase() {
     abstract val dao: FeedDao
 }

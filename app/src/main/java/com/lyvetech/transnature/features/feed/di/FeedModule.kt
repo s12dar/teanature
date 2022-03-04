@@ -1,10 +1,12 @@
 package com.lyvetech.transnature.features.feed.di
 
-import com.lyvetech.transnature.features.feed.data.local.FeedDao
 import com.lyvetech.transnature.core.data.local.TransNatureDatabase
+import com.lyvetech.transnature.features.feed.data.local.FeedDao
 import com.lyvetech.transnature.features.feed.data.remote.FeedApiService
 import com.lyvetech.transnature.features.feed.data.repository.FeedRepository
 import com.lyvetech.transnature.features.feed.data.repository.FeedRepositoryImpl
+import com.lyvetech.transnature.features.feed.domain.usecase.FeedInfoUseCase
+import com.lyvetech.transnature.features.feed.domain.usecase.FeedInfoUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -23,7 +25,8 @@ abstract class FeedModule {
 
     @Binds
     abstract fun provideTransNatureUseCase(
-    )
+        feedInfoUseCaseImpl: FeedInfoUseCaseImpl
+    ): FeedInfoUseCase
 
     companion object {
         @Provides
