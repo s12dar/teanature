@@ -43,7 +43,33 @@ class FeedRepositoryImpl(
         emit(Resource.Success(newTrails))
     }
 
-    override fun getAllTrails(): Flow<Resource<List<Trail>>> {
-        TODO("Not yet implemented")
+    override fun getAllTrails(): Flow<Resource<List<Trail>>> = flow {
+        emit(Resource.Loading())
+
+        val trails = dao.getAllTrails().map { it.toTrail() }
+        emit(Resource.Loading(data = trails))
+
+        try {
+            val remoteTrails = api.getAllTrails()
+            remoteTrails.map { it.name }.let { dao.deleteTrails(it) }
+            dao.insertTrails(remoteTrails.map { it.toTrailEntity() })
+        } catch (e: HttpException) {
+            emit(
+                Resource.Error(
+                    message = "Oops, something went wrong!",
+                    data = trails
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                Resource.Error(
+                    message = "Couldn't reach server, check your internet connection.",
+                    data = trails
+                )
+            )
+        }
+
+        val newTrails = dao.getAllTrails().map { it.toTrail() }
+        emit(Resource.Success(newTrails))
     }
 }
