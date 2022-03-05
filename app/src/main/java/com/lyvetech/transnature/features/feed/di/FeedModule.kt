@@ -5,38 +5,53 @@ import com.lyvetech.transnature.features.feed.data.local.FeedDao
 import com.lyvetech.transnature.features.feed.data.remote.FeedApiService
 import com.lyvetech.transnature.features.feed.data.repository.FeedRepository
 import com.lyvetech.transnature.features.feed.data.repository.FeedRepositoryImpl
-import com.lyvetech.transnature.features.feed.domain.usecase.FeedInfoUseCase
-import com.lyvetech.transnature.features.feed.domain.usecase.FeedInfoUseCaseImpl
-import dagger.Binds
+import com.lyvetech.transnature.features.feed.domain.usecase.GetAllTrailsUseCase
+import com.lyvetech.transnature.features.feed.domain.usecase.GetSearchedTrailsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class FeedModule {
+object FeedModule {
 
-    @Binds
-    abstract fun provideTransNatureRepository(
-        trailRepositoryImpl: FeedRepositoryImpl
-    ): FeedRepository
+    @Provides
+    @Singleton
+    fun provideTransNatureServiceApi(
+        retrofit: Retrofit
+    ): FeedApiService = retrofit.create(FeedApiService::class.java)
 
-    @Binds
-    abstract fun provideTransNatureUseCase(
-        feedInfoUseCaseImpl: FeedInfoUseCaseImpl
-    ): FeedInfoUseCase
+    @Provides
+    @Singleton
+    fun provideTransNatureDao(
+        transNatureDatabase: TransNatureDatabase
+    ): FeedDao = transNatureDatabase.dao
 
-    companion object {
-        @Provides
-        fun provideTransNatureServiceApi(
-            retrofit: Retrofit
-        ): FeedApiService = retrofit.create(FeedApiService::class.java)
+    @Provides
+    @Singleton
+    fun provideFeedRepository(
+        apiService: FeedApiService,
+        dao: FeedDao
+    ): FeedRepository {
+        return FeedRepositoryImpl(apiService, dao)
+    }
 
-        @Provides
-        fun provideTransNatureDao(
-            transNatureDatabase: TransNatureDatabase
-        ): FeedDao = transNatureDatabase.dao
+    @Provides
+    @Singleton
+    fun providesAllTrailsUseCase(
+        repository: FeedRepository
+    ): GetAllTrailsUseCase {
+        return GetAllTrailsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSearchedTrailsUseCase(
+        repository: FeedRepository
+    ): GetSearchedTrailsUseCase {
+        return GetSearchedTrailsUseCase(repository)
     }
 }

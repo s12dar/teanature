@@ -7,19 +7,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class FeedInfoUseCaseImpl @Inject constructor(
+class GetSearchedTrailsUseCase @Inject constructor(
     private val feedRepository: FeedRepository
-) : FeedInfoUseCase {
-    override suspend fun getSearchedTrails(name: String): Flow<Resource<List<Trail>>> {
+) {
+    suspend operator fun invoke(name: String): Flow<Resource<List<Trail>>> {
         if (name.isBlank()) {
             return flow { }
         }
 
         return feedRepository.getSearchedTrails(name)
     }
-
-    override suspend fun getAllTrails(): Flow<Resource<List<Trail>>> {
-        return feedRepository.getAllTrails()
-    }
-
 }

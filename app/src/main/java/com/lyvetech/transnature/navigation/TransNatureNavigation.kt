@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.lyvetech.transnature.features.feed.ui.FeedScreen
 import com.lyvetech.transnature.features.splash.ui.SplashScreen
 
 @Composable
@@ -22,10 +23,10 @@ fun TransNatureNavigation() {
             )
         }
 
-//        composable(
-//            route = Screen.Feed.route
-//        ) {
-//            FeedScreen()
-//        }
+        composable(
+            route = Screen.Feed.route
+        ) {
+            FeedScreen()
+        }
     }
 }
