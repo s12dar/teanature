@@ -9,7 +9,7 @@ import com.lyvetech.transnature.features.feed.domain.model.Trail
 data class TrailEntity(
     val name: String,
     val desc: String,
-    val imgUrl: String,
+    val imgUrl: String?,
     val startLatitude: Double,
     val startLongitude: Double,
     val endLatitude: Double,

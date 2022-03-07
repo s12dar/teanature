@@ -13,20 +13,20 @@ fun TransNatureNavigation() {
     val navigation = rememberNavController()
     NavHost(
         navController = navigation,
-        startDestination = Screen.Splash.route
+        startDestination = Screen.Feed.route
     ) {
-        composable(
-            route = Screen.Splash.route
-        ) {
-            SplashScreen(
-                navigationController = navigation
-            )
-        }
+//        composable(
+//            route = Screen.Splash.route
+//        ) {
+//            SplashScreen(
+//                navigationController = navigation
+//            )
+//        }
 
         composable(
             route = Screen.Feed.route
         ) {
-            FeedScreen()
+            FeedScreen(navController = navigation)
         }
     }
 }

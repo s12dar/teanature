@@ -1,5 +1,7 @@
 package com.lyvetech.transnature.features.feed.di
 
+import android.app.Application
+import androidx.room.Room
 import com.lyvetech.transnature.core.data.local.TransNatureDatabase
 import com.lyvetech.transnature.features.feed.data.local.FeedDao
 import com.lyvetech.transnature.features.feed.data.remote.FeedApiService
@@ -12,6 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -20,9 +23,23 @@ object FeedModule {
 
     @Provides
     @Singleton
-    fun provideTransNatureServiceApi(
-        retrofit: Retrofit
-    ): FeedApiService = retrofit.create(FeedApiService::class.java)
+    fun provideTransNatureServiceApi(): FeedApiService {
+        return Retrofit.Builder()
+            .baseUrl(FeedApiService.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(FeedApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTransNatureDatabase(app: Application): TransNatureDatabase {
+        return Room.databaseBuilder(
+            app,
+            TransNatureDatabase::class.java, "transnature_db"
+        ).fallbackToDestructiveMigration()
+            .build()
+    }
 
     @Provides
     @Singleton

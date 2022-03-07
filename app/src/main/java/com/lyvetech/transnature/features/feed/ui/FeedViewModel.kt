@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.lyvetech.transnature.core.util.Resource
 import com.lyvetech.transnature.features.feed.domain.usecase.GetAllTrailsUseCase
 import com.lyvetech.transnature.features.feed.domain.usecase.GetSearchedTrailsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class FeedViewModel @Inject constructor(
     private val getAllTrailsUseCase: GetAllTrailsUseCase,
     private val getSearchedTrailsUseCase: GetSearchedTrailsUseCase
@@ -31,6 +33,10 @@ class FeedViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     private var searchJob: Job? = null
+
+    init {
+        getAllTrails()
+    }
 
     fun onSearchedTrails(query: String) {
         _searchQuery.value = query
@@ -69,7 +75,7 @@ class FeedViewModel @Inject constructor(
         }
     }
 
-    fun getAllTrails() {
+    private fun getAllTrails() {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             getAllTrailsUseCase()

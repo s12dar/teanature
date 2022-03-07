@@ -1,7 +1,5 @@
 package com.lyvetech.transnature.features.splash.ui
 
-import android.view.animation.AlphaAnimation
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,9 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.lyvetech.transnature.R
+import com.lyvetech.transnature.navigation.Screen
 
 @Composable
 fun SplashScreen(
@@ -31,6 +29,9 @@ fun SplashScreen(
                 painter = painterResource(id = R.drawable.ic_app),
                 contentDescription = null
             )
+
+            navigationController?.popBackStack()
+            navigationController?.navigate(Screen.Feed.route)
         }
     }
 }
