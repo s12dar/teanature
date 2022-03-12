@@ -1,17 +1,21 @@
 package com.lyvetech.transnature.features.feed.data.repository
 
+import com.lyvetech.transnature.core.di.IoDispatcher
 import com.lyvetech.transnature.core.util.Resource
 import com.lyvetech.transnature.features.feed.data.local.FeedDao
 import com.lyvetech.transnature.features.feed.data.remote.FeedApiService
 import com.lyvetech.transnature.features.feed.domain.model.Trail
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class FeedRepositoryImpl(
+class FeedRepositoryImpl @Inject constructor(
     private val api: FeedApiService,
-    private val dao: FeedDao
+    private val dao: FeedDao,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : FeedRepository {
     override suspend fun getSearchedTrails(name: String): Flow<Resource<List<Trail>>> = flow {
         emit(Resource.Loading())

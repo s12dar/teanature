@@ -1,7 +1,6 @@
 package com.lyvetech.transnature.features.feed.data.remote
 
 import com.lyvetech.transnature.features.feed.data.remote.dto.TrailDto
-import com.lyvetech.transnature.features.feed.domain.model.Trail
 import javax.inject.Inject
 
 class FeedRemoteDataSource @Inject constructor(

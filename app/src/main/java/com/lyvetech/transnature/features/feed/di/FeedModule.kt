@@ -1,7 +1,5 @@
 package com.lyvetech.transnature.features.feed.di
 
-import android.app.Application
-import androidx.room.Room
 import com.lyvetech.transnature.core.data.local.TransNatureDatabase
 import com.lyvetech.transnature.features.feed.data.local.FeedDao
 import com.lyvetech.transnature.features.feed.data.remote.FeedApiService
@@ -9,66 +7,42 @@ import com.lyvetech.transnature.features.feed.data.repository.FeedRepository
 import com.lyvetech.transnature.features.feed.data.repository.FeedRepositoryImpl
 import com.lyvetech.transnature.features.feed.domain.usecase.GetAllTrailsUseCase
 import com.lyvetech.transnature.features.feed.domain.usecase.GetSearchedTrailsUseCase
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FeedModule {
+abstract class FeedModule {
 
-    @Provides
-    @Singleton
-    fun provideTransNatureServiceApi(): FeedApiService {
-        return Retrofit.Builder()
-            .baseUrl(FeedApiService.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(FeedApiService::class.java)
-    }
+    @Binds
+    abstract fun provideFeedRepository(
+        feedRepositoryImpl: FeedRepositoryImpl
+    ): FeedRepository
 
-    @Provides
-    @Singleton
-    fun provideTransNatureDatabase(app: Application): TransNatureDatabase {
-        return Room.databaseBuilder(
-            app,
-            TransNatureDatabase::class.java, "transnature_db"
-        ).fallbackToDestructiveMigration()
-            .build()
-    }
+    @Binds
+    abstract fun providesAllTrailsUseCase(
+        gelAllTrailsUseCase: GetAllTrailsUseCase
+    ): GetAllTrailsUseCase
 
-    @Provides
-    @Singleton
-    fun provideTransNatureDao(
-        transNatureDatabase: TransNatureDatabase
-    ): FeedDao = transNatureDatabase.dao
+    @Binds
+    abstract fun providesSearchedTrailsUseCase(
+        getSearchedTrailsUseCase: GetSearchedTrailsUseCase
+    ): GetSearchedTrailsUseCase
 
-    @Provides
-    @Singleton
-    fun provideFeedRepository(
-        apiService: FeedApiService,
-        dao: FeedDao
-    ): FeedRepository {
-        return FeedRepositoryImpl(apiService, dao)
-    }
+    companion object {
 
-    @Provides
-    @Singleton
-    fun providesAllTrailsUseCase(
-        repository: FeedRepository
-    ): GetAllTrailsUseCase {
-        return GetAllTrailsUseCase(repository)
-    }
+        @Provides
+        fun provideFeedApiService(
+            retrofit: Retrofit
+        ): FeedApiService = retrofit.create(FeedApiService::class.java)
 
-    @Provides
-    @Singleton
-    fun providesSearchedTrailsUseCase(
-        repository: FeedRepository
-    ): GetSearchedTrailsUseCase {
-        return GetSearchedTrailsUseCase(repository)
+        @Provides
+        fun provideTransNatureDao(
+            transNatureDatabase: TransNatureDatabase
+        ): FeedDao = transNatureDatabase.dao
     }
 }
