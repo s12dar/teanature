@@ -1,5 +1,6 @@
 package com.lyvetech.transnature.features.feed.ui
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,6 @@ import com.lyvetech.transnature.features.feed.domain.usecase.GetAllTrailsUseCase
 import com.lyvetech.transnature.features.feed.domain.usecase.GetSearchedTrailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.launchIn
@@ -86,6 +86,7 @@ class FeedViewModel @Inject constructor(
                                 trailItems = result.data ?: emptyList(),
                                 isLoading = false
                             )
+                            Log.i("DEBUG", trailState.value.trailItems.size.toString())
                         }
                         is Resource.Error -> {
                             _trailState.value = trailState.value.copy(
