@@ -23,16 +23,6 @@ abstract class FeedModule {
         feedRepositoryImpl: FeedRepositoryImpl
     ): FeedRepository
 
-    @Binds
-    abstract fun providesAllTrailsUseCase(
-        gelAllTrailsUseCase: GetAllTrailsUseCase
-    ): GetAllTrailsUseCase
-
-    @Binds
-    abstract fun providesSearchedTrailsUseCase(
-        getSearchedTrailsUseCase: GetSearchedTrailsUseCase
-    ): GetSearchedTrailsUseCase
-
     companion object {
 
         @Provides
@@ -44,5 +34,15 @@ abstract class FeedModule {
         fun provideTransNatureDao(
             transNatureDatabase: TransNatureDatabase
         ): FeedDao = transNatureDatabase.dao
+
+        @Provides
+        fun provideAllTrailsUseCase(
+            feedRepository: FeedRepository
+        ): GetAllTrailsUseCase = GetAllTrailsUseCase(feedRepository)
+
+        @Provides
+        fun provideSearchedTrailsUseCase(
+            feedRepository: FeedRepository
+        ): GetSearchedTrailsUseCase = GetSearchedTrailsUseCase(feedRepository)
     }
 }
