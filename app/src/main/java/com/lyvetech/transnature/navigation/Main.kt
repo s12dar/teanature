@@ -1,10 +1,12 @@
-package com.lyvetech.transnature.features.main.ui
+package com.lyvetech.transnature.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,6 +63,7 @@ enum class TeanatureHomeTab(
     val icon: ImageVector
 ) {
     Feed(R.string.menu_feed, Icons.Filled.Home),
-//    Statistics(R.string.menu_statistics, Icons.Filled.Call),
-//    Profile(R.string.menu_profile, Icons.Filled.Call)
+    Bookmark(R.string.menu_statistics, Icons.Filled.Face),
+    Statistics(R.string.menu_statistics, Icons.Filled.Settings),
+    Profile(R.string.menu_profile, Icons.Filled.Person)
 }
