@@ -8,13 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.lyvetech.transnature.features.feed.ui.components.FeedItem
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun FeedScreen(
-    navController: NavController,
     viewModel: FeedViewModel = hiltViewModel()
 ) {
     val state = viewModel.trailState.value
